@@ -8,7 +8,8 @@
     "bench:short": "npm run build && node dist/scripts/run_bench.js --duration 60 --interval 1000",
     "bench:mid": "npm run build && node dist/scripts/run_bench.js --duration 300 --interval 1000",
     "bench:long": "npm run build && node dist/scripts/run_bench.js --duration 600 --interval 1000",
-    "compare": "npm run build && node dist/scripts/compare.js"
+    "compare": "npm run build && node dist/scripts/compare.js",
+    "compare:all": "npm run build && node dist/scripts/compare_all.js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

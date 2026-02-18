@@ -1,0 +1,16 @@
+{
+  "machine": "air",
+  "timestamp": "20260218_151733",
+  "duration": 60,
+  "interval": 1000,
+  "workers": 10,
+  "nodeVersion": "v22.14.0",
+  "macosVersion": "15.5",
+  "chip": "Apple M4",
+  "model": "MacBook Air / Apple M4",
+  "arch": "arm64",
+  "cpuCount": 10,
+  "totalMemory": "32GB",
+  "startedAt": "2026-02-18T06:17:33.762Z",
+  "completedAt": "2026-02-18T06:18:35.879Z"
+}
