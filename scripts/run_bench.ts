@@ -11,6 +11,7 @@ function parseArgs() {
   let interval = 1000;
   let workers = os.cpus().length;
   let machine = process.env.MACHINE || "unknown";
+  let warmup = 5; // warmup samples to exclude from stats (default 5)
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -26,10 +27,13 @@ function parseArgs() {
       case "--machine":
         machine = args[++i];
         break;
+      case "--warmup":
+        warmup = parseInt(args[++i], 10);
+        break;
     }
   }
 
-  return { duration, interval, workers, machine };
+  return { duration, interval, workers, machine, warmup };
 }
 
 function getTimestamp(): string {
@@ -88,6 +92,7 @@ async function main() {
   console.log(`  Duration:  ${config.duration}s`);
   console.log(`  Workers:   ${config.workers}`);
   console.log(`  Interval:  ${config.interval}ms`);
+  console.log(`  Warmup:    ${config.warmup} samples excluded`);
   console.log(`  Output:    ${resultDir}`);
   console.log(sep);
 
@@ -98,6 +103,7 @@ async function main() {
     duration: config.duration,
     interval: config.interval,
     workers: config.workers,
+    warmup: config.warmup,
     nodeVersion: process.version,
     macosVersion: shellExec("sw_vers -productVersion"),
     chip: shellExec("sysctl -n machdep.cpu.brand_string"),
@@ -129,7 +135,7 @@ async function main() {
     [
       "powermetrics",
       "--samplers",
-      "cpu_power",
+      "cpu_power,thermal",
       "-i",
       String(config.interval),
     ],
@@ -155,14 +161,19 @@ async function main() {
     `[*] Starting CPU stress (${config.workers} workers, ${config.duration}s)...`
   );
   const stressStart = Date.now();
-  const stressResults = await runCpuStress(config.duration, config.workers);
+  const stressOutput = await runCpuStress(config.duration, config.workers, 10, (p) => {
+    if (p.workerId === 0) {
+      const ips = Math.round(p.intervalIterations / (p.intervalMs / 1000));
+      console.log(`[*] Progress: ${(p.elapsedMs / 1000).toFixed(0)}s elapsed, worker0 IPS=${ips.toLocaleString()}`);
+    }
+  });
   const stressElapsed = Date.now() - stressStart;
   console.log(
     `[*] CPU stress completed in ${(stressElapsed / 1000).toFixed(1)}s`
   );
 
-  const totalIterations = stressResults.reduce(
-    (sum, r) => sum + r.iterations,
+  const totalIterations = stressOutput.results.reduce(
+    (sum: number, r) => sum + r.iterations,
     0
   );
   console.log(`[*] Total iterations: ${totalIterations.toLocaleString()}`);
@@ -201,7 +212,20 @@ async function main() {
   // 7. Parse powermetrics and generate summary
   console.log("[*] Parsing powermetrics output...");
   const rawText = fs.readFileSync(rawLogPath, "utf-8");
-  const powerSummary = parsePowermetrics(rawText);
+  const powerSummary = parsePowermetrics(rawText, { warmupSamples: config.warmup });
+
+  // Aggregate per-worker progress into throughput timeseries
+  const progressByTime = new Map<number, { totalIps: number; count: number }>();
+  for (const p of stressOutput.progress) {
+    const sec = Math.round(p.elapsedMs / 1000);
+    const entry = progressByTime.get(sec) || { totalIps: 0, count: 0 };
+    entry.totalIps += Math.round(p.intervalIterations / (p.intervalMs / 1000));
+    entry.count++;
+    progressByTime.set(sec, entry);
+  }
+  const throughputTimeseries = Array.from(progressByTime.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([sec, v]) => ({ elapsedSec: sec, aggregateIps: v.totalIps }));
 
   const summary = {
     ...powerSummary,
@@ -212,11 +236,12 @@ async function main() {
       iterationsPerSecond: Math.round(
         totalIterations / (stressElapsed / 1000)
       ),
-      perWorker: stressResults.map((r) => ({
+      perWorker: stressOutput.results.map((r) => ({
         workerId: r.workerId,
         iterations: r.iterations,
         elapsedMs: r.elapsed,
       })),
+      throughputTimeseries,
     },
     completedAt: new Date().toISOString(),
   };
@@ -254,30 +279,33 @@ async function main() {
   console.log("    notes.md");
   console.log(sep);
 
+  if (powerSummary.warmupSamplesExcluded > 0) {
+    console.log(`\n  Warmup:         ${powerSummary.warmupSamplesExcluded} samples excluded from stats`);
+  }
   if (powerSummary.cpuPower.avg !== null) {
     console.log(
-      `\n  CPU Power:      avg=${powerSummary.cpuPower.avg} mW  max=${powerSummary.cpuPower.max} mW  min=${powerSummary.cpuPower.min} mW`
+      `  CPU Power:      avg=${powerSummary.cpuPower.avg} mW  median=${powerSummary.cpuPower.median} mW  stddev=${powerSummary.cpuPower.stddev} mW`
     );
   }
   if (powerSummary.combinedPower.avg !== null) {
     console.log(
-      `  Combined Power: avg=${powerSummary.combinedPower.avg} mW  max=${powerSummary.combinedPower.max} mW  min=${powerSummary.combinedPower.min} mW`
+      `  Combined Power: avg=${powerSummary.combinedPower.avg} mW  stddev=${powerSummary.combinedPower.stddev} mW`
     );
   }
   if (powerSummary.pClusterFreq.avg !== null) {
     console.log(
-      `  P-Cluster Freq: avg=${powerSummary.pClusterFreq.avg} MHz  max=${powerSummary.pClusterFreq.max} MHz`
+      `  P-Cluster Freq: avg=${powerSummary.pClusterFreq.avg} MHz  median=${powerSummary.pClusterFreq.median} MHz  stddev=${powerSummary.pClusterFreq.stddev} MHz`
     );
   }
   if (powerSummary.eClusterFreq.avg !== null) {
     console.log(
-      `  E-Cluster Freq: avg=${powerSummary.eClusterFreq.avg} MHz  max=${powerSummary.eClusterFreq.max} MHz`
+      `  E-Cluster Freq: avg=${powerSummary.eClusterFreq.avg} MHz  median=${powerSummary.eClusterFreq.median} MHz`
     );
   }
   console.log(
     `  Iterations/s:   ${summary.stress.iterationsPerSecond.toLocaleString()}`
   );
-  console.log(`  Total samples:  ${powerSummary.totalSamples}`);
+  console.log(`  Total samples:  ${powerSummary.totalSamples} (${powerSummary.totalSamples - powerSummary.warmupSamplesExcluded} used for stats)`);
   console.log();
 }
 

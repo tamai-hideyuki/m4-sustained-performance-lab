@@ -46,7 +46,7 @@ npm scripts を経由せず直接実行する場合、各種パラメータを�
 
 ```bash
 npm run build
-node dist/scripts/run_bench.js --duration 120 --workers 8 --interval 500 --machine pro
+node dist/scripts/run_bench.js --duration 120 --workers 8 --interval 500 --machine pro --warmup 10
 ```
 
 | オプション | デフォルト | 説明 |
@@ -55,13 +55,18 @@ node dist/scripts/run_bench.js --duration 120 --workers 8 --interval 500 --machi
 | `--workers` | CPU論理コア数 | worker_threads の並列数 |
 | `--interval` | 1000 | powermetrics サンプリング間隔（ms） |
 | `--machine` | `$MACHINE` or `unknown` | マシン識別名 |
+| `--warmup` | 5 | 統計計算から除外するウォームアップサンプル数 |
 
 ### 比較レポート
 
 両マシンの結果が揃ったら、比較レポートを生成できます:
 
 ```bash
+# 最新結果同士のペア比較
 npm run compare
+
+# 全結果の横断比較（持続時間別の劣化分析付き）
+npm run compare:all
 ```
 
 デフォルトでは `pro` と `air` の最新結果を比較します。マシン名を変更する場合:
@@ -69,6 +74,25 @@ npm run compare
 ```bash
 npm run build && node dist/scripts/compare.js --a pro --b air
 ```
+
+比較時に duration や workers が異なる場合は警告が表示されます。
+
+## 計測の仕組み
+
+### 並列実行
+
+ベンチマーク実行中、以下の2つのプロセスが並行して動作します:
+
+1. **powermetrics** — 電力・周波数・レジデンシー・サーマルデータを 1秒ごとにサンプリング
+2. **CPU ストレス** — 全コアで worker_threads を使った busy loop（決定的 xorshift128+ PRNG による再現性のある数値演算）
+
+### ウォームアップ除外
+
+計測開始直後の数サンプルはCPU が定常状態に達していないため、統計計算（avg, stddev 等）から除外されます。デフォルトは 5 サンプル（`--warmup` で変更可能）。時系列データには全サンプルが保持されるため、立ち上がり挙動も確認できます。
+
+### Worker 中間報告
+
+各ワーカーは 10 秒ごとに中間イテレーション数を報告します。これにより、スロットリングによるスループット劣化の時間推移が `summary.json` の `stress.throughputTimeseries` として記録されます。
 
 ## 出力ファイル
 
@@ -80,7 +104,7 @@ results/
     20260218_143022/
       run.json              # 実行条件メタ情報
       raw_powermetrics.txt  # powermetrics 生ログ
-      summary.json          # パース済みサマリ
+      summary.json          # パース済みサマリ（統計量 + 時系列データ）
       notes.md              # メモ欄（手動記入用）
     latest -> 20260218_143022  # 最新結果へのシンボリックリンク
   air/
@@ -91,23 +115,40 @@ results/
 
 ```json
 {
-  "cpuPower":      { "avg": 12345.67, "max": 15000, "min": 8000, "samples": 58 },
-  "gpuPower":      { "avg": 100.5,    "max": 200,   "min": 50,   "samples": 58 },
-  "combinedPower": { "avg": 12446.17, "max": 15200, "min": 8050, "samples": 58 },
-  "pClusterFreq":  { "avg": 3800.0,   "max": 4050,  "min": 3200, "samples": 58 },
-  "eClusterFreq":  { "avg": 2064.0,   "max": 2064,  "min": 2064, "samples": 58 },
-  "pClusterActiveResidency": { "avg": 95.2, ... },
-  "eClusterActiveResidency": { "avg": 40.1, ... },
-  "pClusterIdleResidency":   { "avg": 4.8,  ... },
-  "eClusterIdleResidency":   { "avg": 59.9, ... },
-  "totalSamples": 58,
-  "durationMs": 58000,
+  "cpuPower": {
+    "avg": 12345.67,
+    "max": 15000,
+    "min": 8000,
+    "median": 12500.0,
+    "stddev": 1234.56,
+    "p5": 9000.0,
+    "p95": 14500.0,
+    "samples": 55
+  },
+  "pClusterFreq": { "avg": 3800.0, "median": 3850.0, "stddev": 120.5, "..." : "..." },
+  "totalSamples": 60,
+  "warmupSamplesExcluded": 5,
+  "durationMs": 60000,
+  "timeseries": [
+    {
+      "index": 0,
+      "elapsedMs": 1012,
+      "cpuPower": 1669,
+      "pClusterFreq": 4218.0,
+      "thermalPressure": "Nominal",
+      "...": "..."
+    }
+  ],
   "stress": {
     "workers": 12,
     "totalIterations": 1234567890,
     "elapsedMs": 60012,
     "iterationsPerSecond": 20571234,
-    "perWorker": [...]
+    "perWorker": [...],
+    "throughputTimeseries": [
+      { "elapsedSec": 10, "aggregateIps": 20000000 },
+      { "elapsedSec": 20, "aggregateIps": 19500000 }
+    ]
   }
 }
 ```
@@ -117,15 +158,20 @@ results/
 | メトリクス | 意味 |
 |-----------|------|
 | **CPU Power avg** | 平均消費電力。高い = よりパワーを使えている |
-| **CPU Power max vs min** | 差が大きい = サーマルスロットリングの可能性 |
-| **P-Cluster Freq avg** | P-core の平均動作周波数。持続的に高ければ冷却が効いている |
+| **CPU Power stddev** | 電力のばらつき。大きい = スロットリングによる変動が激しい |
+| **CPU Power p5 / p95** | 電力の下位5% / 上位95%。外れ値を除いた実効範囲 |
+| **P-Cluster Freq median** | P-core 周波数の中央値。avg より外れ値に頑健 |
+| **P-Cluster Freq stddev** | 周波数のばらつき。小さい = 安定した持続性能 |
 | **P-Cluster Idle Residency** | P-core のアイドル率。高い = スロットリングで休止が多い |
 | **Iterations/s** | CPU演算スループット。最終的な実効性能の指標 |
+| **thermalPressure** | サーマルプレッシャー（Nominal / Moderate / Heavy / Trapping / Sleeping） |
+| **throughputTimeseries** | 時間経過に伴うスループット変化。劣化タイミングの特定に |
 
 **Pro vs Air で見るべき差:**
 - `bench:short` では両者の差が小さい（瞬間火力は同等）
 - `bench:long` では Pro の方が高い値を維持する（放熱差が出る）
 - Air は長時間で Freq / Power が下がり、Idle Residency が上がる傾向
+- `stddev` を比較すると、Air の方がばらつきが大きい（スロットリングの影響）
 
 ## 注意事項
 
@@ -156,6 +202,7 @@ sudo -v && MACHINE=pro npm run bench:short
 - バックグラウンドアプリを可能な限り閉じてください
 - 電源接続状態を統一してください（両方接続 or 両方バッテリー）
 - 室温が極端に異ならない環境で実行してください
+- `--warmup` を適切に設定し、立ち上がりノイズを除外してください
 
 ## フォルダ構成
 
@@ -164,14 +211,16 @@ m4-sustained-performance-lab/
   package.json
   tsconfig.json
   .gitignore
+  CLAUDE.md              # Claude Code 向けガイド
   README.md
   scripts/
     run_bench.ts           # メインランナー
-    cpu_stress.ts          # CPU負荷オーケストレーター
-    cpu_stress_worker.ts   # Worker thread（busy loop）
-    parse_powermetrics.ts  # powermetrics パーサー
-    compare.ts             # 比較レポート生成
-  results/                 # 計測結果（gitignored）
+    cpu_stress.ts          # CPU負荷オーケストレーター（進捗コールバック対応）
+    cpu_stress_worker.ts   # Worker thread（xorshift128+ による決定的ワークロード）
+    parse_powermetrics.ts  # powermetrics パーサー（統計量・時系列・ウォームアップ除外）
+    compare.ts             # ペア比較レポート（バリデーション付き）
+    compare_all.ts         # 全結果横断比較・劣化分析
+  results/                 # 計測結果（git 管理）
   dist/                    # コンパイル済みJS（gitignored）
 ```
 

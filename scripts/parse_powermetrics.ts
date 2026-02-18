@@ -14,12 +14,34 @@ interface PowerSample {
   eClusterIdleResidencies: number[];
   pClusterDownResidencies: number[];
   eClusterDownResidencies: number[];
+  thermalPressure: string | null;
+}
+
+export interface TimeSeriesSample {
+  index: number;
+  elapsedMs: number;
+  cpuPower: number | null;
+  gpuPower: number | null;
+  combinedPower: number | null;
+  pClusterFreq: number | null;
+  eClusterFreq: number | null;
+  pClusterActiveResidency: number | null;
+  eClusterActiveResidency: number | null;
+  thermalPressure: string | null;
+}
+
+export interface ParseOptions {
+  warmupSamples?: number;
 }
 
 interface PowerStats {
   avg: number | null;
   max: number | null;
   min: number | null;
+  median: number | null;
+  stddev: number | null;
+  p5: number | null;
+  p95: number | null;
   samples: number;
 }
 
@@ -36,7 +58,9 @@ export interface PowerSummary {
   pClusterDownResidency: PowerStats;
   eClusterDownResidency: PowerStats;
   totalSamples: number;
+  warmupSamplesExcluded: number;
   durationMs: number | null;
+  timeseries: TimeSeriesSample[];
 }
 
 function extractNumber(text: string, pattern: RegExp): number | null {
@@ -58,6 +82,11 @@ function extractAllNumbers(text: string, pattern: RegExp): number[] {
     }
   }
   return results;
+}
+
+function extractString(text: string, pattern: RegExp): string | null {
+  const match = text.match(pattern);
+  return match && match[1] ? match[1].trim() : null;
 }
 
 function parseSample(block: string): PowerSample {
@@ -104,6 +133,10 @@ function parseSample(block: string): PowerSample {
       block,
       /E\d*-Cluster down residency:\s*([\d.]+)\s*%/gi
     ),
+    thermalPressure: extractString(
+      block,
+      /System Average thermal level:\s*(\S+)/i
+    ),
   };
 }
 
@@ -112,28 +145,77 @@ function avg(arr: number[]): number | null {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
+function percentile(sorted: number[], p: number): number {
+  const idx = (p / 100) * (sorted.length - 1);
+  const lo = Math.floor(idx);
+  const hi = Math.ceil(idx);
+  if (lo === hi) return sorted[lo];
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
+}
+
+function round2(v: number): number {
+  return Math.round(v * 100) / 100;
+}
+
 function computeStats(values: (number | null)[]): PowerStats {
   const valid = values.filter((v): v is number => v !== null);
   if (valid.length === 0) {
-    return { avg: null, max: null, min: null, samples: 0 };
+    return { avg: null, max: null, min: null, median: null, stddev: null, p5: null, p95: null, samples: 0 };
   }
   const sum = valid.reduce((a, b) => a + b, 0);
+  const mean = sum / valid.length;
+  const variance = valid.reduce((acc, v) => acc + (v - mean) ** 2, 0) / valid.length;
+  const sorted = [...valid].sort((a, b) => a - b);
   return {
-    avg: Math.round((sum / valid.length) * 100) / 100,
-    max: Math.round(Math.max(...valid) * 100) / 100,
-    min: Math.round(Math.min(...valid) * 100) / 100,
+    avg: round2(mean),
+    max: round2(Math.max(...valid)),
+    min: round2(Math.min(...valid)),
+    median: round2(percentile(sorted, 50)),
+    stddev: round2(Math.sqrt(variance)),
+    p5: round2(percentile(sorted, 5)),
+    p95: round2(percentile(sorted, 95)),
     samples: valid.length,
   };
 }
 
-export function parsePowermetrics(rawText: string): PowerSummary {
+export function parsePowermetrics(rawText: string, options?: ParseOptions): PowerSummary {
+  const warmupSamples = options?.warmupSamples ?? 0;
+
   // Split into sample blocks by the "Sampled system activity" delimiter
   const blocks = rawText.split(/\*{3,}\s*Sampled system activity/i);
 
-  const samples: PowerSample[] = [];
+  // Extract per-block elapsed times for timeseries
+  const elapsedPerBlock: number[] = [];
   for (let i = 1; i < blocks.length; i++) {
-    samples.push(parseSample(blocks[i]));
+    const m = blocks[i].match(/\((\d+(?:\.\d+)?)\s*ms elapsed\)/i);
+    elapsedPerBlock.push(m ? parseFloat(m[1]) : 0);
   }
+
+  const allSamples: PowerSample[] = [];
+  for (let i = 1; i < blocks.length; i++) {
+    allSamples.push(parseSample(blocks[i]));
+  }
+
+  // Build full timeseries (before warmup exclusion)
+  let cumulativeMs = 0;
+  const timeseries: TimeSeriesSample[] = allSamples.map((s, i) => {
+    cumulativeMs += elapsedPerBlock[i];
+    return {
+      index: i,
+      elapsedMs: Math.round(cumulativeMs),
+      cpuPower: s.cpuPower,
+      gpuPower: s.gpuPower,
+      combinedPower: s.combinedPower ?? s.packagePower,
+      pClusterFreq: avg(s.pClusterFreqs),
+      eClusterFreq: avg(s.eClusterFreqs),
+      pClusterActiveResidency: avg(s.pClusterActiveResidencies),
+      eClusterActiveResidency: avg(s.eClusterActiveResidencies),
+      thermalPressure: s.thermalPressure,
+    };
+  });
+
+  // Exclude warmup samples from statistics (but keep in timeseries)
+  const samples = allSamples.slice(warmupSamples);
 
   // For combined power, prefer 'Combined Power' then fall back to 'Package Power'
   const combinedValues = samples.map(
@@ -154,17 +236,10 @@ export function parsePowermetrics(rawText: string): PowerSummary {
   const pDownPerSample = samples.map((s) => avg(s.pClusterDownResidencies));
   const eDownPerSample = samples.map((s) => avg(s.eClusterDownResidencies));
 
-  // Sum all elapsed intervals to get total duration
-  // Format: (1013.05ms elapsed) — value can be decimal
+  // Total duration from all samples (including warmup)
   let durationMs: number | null = null;
-  const elapsedMatches = rawText.matchAll(
-    /\((\d+(?:\.\d+)?)\s*ms elapsed\)/gi
-  );
-  const allElapsed = Array.from(elapsedMatches);
-  if (allElapsed.length > 0) {
-    durationMs = Math.round(
-      allElapsed.reduce((sum, m) => sum + parseFloat(m[1]), 0)
-    );
+  if (elapsedPerBlock.length > 0) {
+    durationMs = Math.round(elapsedPerBlock.reduce((a, b) => a + b, 0));
   }
 
   return {
@@ -179,8 +254,10 @@ export function parsePowermetrics(rawText: string): PowerSummary {
     eClusterIdleResidency: computeStats(eIdlePerSample),
     pClusterDownResidency: computeStats(pDownPerSample),
     eClusterDownResidency: computeStats(eDownPerSample),
-    totalSamples: samples.length,
+    totalSamples: allSamples.length,
+    warmupSamplesExcluded: Math.min(warmupSamples, allSamples.length),
     durationMs,
+    timeseries,
   };
 }
 

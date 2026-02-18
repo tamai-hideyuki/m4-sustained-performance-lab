@@ -13,6 +13,10 @@ interface PowerStats {
   avg: number | null;
   max: number | null;
   min: number | null;
+  median: number | null;
+  stddev: number | null;
+  p5: number | null;
+  p95: number | null;
   samples: number;
 }
 
@@ -172,12 +176,17 @@ function main() {
   };
 
   row("CPU Power avg", (s) => s.cpuPower.avg, " mW");
+  row("CPU Power median", (s) => s.cpuPower.median, " mW");
+  row("CPU Power stddev", (s) => s.cpuPower.stddev, " mW");
   row("CPU Power max", (s) => s.cpuPower.max, " mW");
   row("CPU Power min", (s) => s.cpuPower.min, " mW");
   console.log();
   row("Combined Power avg", (s) => s.combinedPower.avg, " mW");
+  row("Combined Power stddev", (s) => s.combinedPower.stddev, " mW");
   console.log();
   row("P-Cluster Freq avg", (s) => s.pClusterFreq.avg, " MHz");
+  row("P-Cluster Freq median", (s) => s.pClusterFreq.median, " MHz");
+  row("P-Cluster Freq stddev", (s) => s.pClusterFreq.stddev, " MHz");
   row("P-Cluster Freq max", (s) => s.pClusterFreq.max, " MHz");
   row("E-Cluster Freq avg", (s) => s.eClusterFreq.avg, " MHz");
   console.log();

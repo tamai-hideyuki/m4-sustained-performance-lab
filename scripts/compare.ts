@@ -5,6 +5,10 @@ interface PowerStats {
   avg: number | null;
   max: number | null;
   min: number | null;
+  median: number | null;
+  stddev: number | null;
+  p5: number | null;
+  p95: number | null;
   samples: number;
 }
 
@@ -128,6 +132,17 @@ function main() {
   console.log(`    Chip:     ${runB.chip || "N/A"}`);
   console.log(`    Workers:  ${runB.workers}   Duration: ${runB.duration}s`);
   console.log();
+
+  // Validation warnings
+  if (runA.duration !== runB.duration) {
+    console.log(`  ⚠ WARNING: Duration mismatch (${runA.duration}s vs ${runB.duration}s) — comparison may be misleading`);
+    console.log();
+  }
+  if (runA.workers !== runB.workers) {
+    console.log(`  ⚠ NOTE: Different worker counts (${runA.workers} vs ${runB.workers})`);
+    console.log();
+  }
+
   console.log(line);
 
   const col = (s: string, w: number) => s.padEnd(w);
@@ -150,6 +165,10 @@ function main() {
   };
 
   row("CPU Power avg", summaryA.cpuPower.avg, summaryB.cpuPower.avg, " mW");
+  row("CPU Power median", summaryA.cpuPower.median, summaryB.cpuPower.median, " mW");
+  row("CPU Power stddev", summaryA.cpuPower.stddev, summaryB.cpuPower.stddev, " mW");
+  row("CPU Power p5", summaryA.cpuPower.p5, summaryB.cpuPower.p5, " mW");
+  row("CPU Power p95", summaryA.cpuPower.p95, summaryB.cpuPower.p95, " mW");
   row("CPU Power max", summaryA.cpuPower.max, summaryB.cpuPower.max, " mW");
   row("CPU Power min", summaryA.cpuPower.min, summaryB.cpuPower.min, " mW");
   console.log();
@@ -158,6 +177,12 @@ function main() {
     "Combined Power avg",
     summaryA.combinedPower.avg,
     summaryB.combinedPower.avg,
+    " mW"
+  );
+  row(
+    "Combined Power stddev",
+    summaryA.combinedPower.stddev,
+    summaryB.combinedPower.stddev,
     " mW"
   );
   row(
@@ -181,6 +206,18 @@ function main() {
     "P-Cluster Freq avg",
     summaryA.pClusterFreq.avg,
     summaryB.pClusterFreq.avg,
+    " MHz"
+  );
+  row(
+    "P-Cluster Freq median",
+    summaryA.pClusterFreq.median,
+    summaryB.pClusterFreq.median,
+    " MHz"
+  );
+  row(
+    "P-Cluster Freq stddev",
+    summaryA.pClusterFreq.stddev,
+    summaryB.pClusterFreq.stddev,
     " MHz"
   );
   row(
