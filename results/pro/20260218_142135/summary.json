@@ -1,0 +1,139 @@
+{
+  "cpuPower": {
+    "avg": 35280.58,
+    "max": 51837,
+    "min": 2589,
+    "samples": 297
+  },
+  "gpuPower": {
+    "avg": 17.43,
+    "max": 270,
+    "min": 7,
+    "samples": 297
+  },
+  "combinedPower": {
+    "avg": 35297.84,
+    "max": 51894,
+    "min": 2596,
+    "samples": 297
+  },
+  "pClusterFreq": {
+    "avg": 3470.32,
+    "max": 4082.5,
+    "min": 3369,
+    "samples": 297
+  },
+  "eClusterFreq": {
+    "avg": 2589.79,
+    "max": 2592,
+    "min": 2052,
+    "samples": 297
+  },
+  "pClusterActiveResidency": {
+    "avg": 99.72,
+    "max": 100,
+    "min": 49.2,
+    "samples": 297
+  },
+  "eClusterActiveResidency": {
+    "avg": 99.91,
+    "max": 100,
+    "min": 73.66,
+    "samples": 297
+  },
+  "pClusterIdleResidency": {
+    "avg": 0.01,
+    "max": 3.16,
+    "min": 0,
+    "samples": 297
+  },
+  "eClusterIdleResidency": {
+    "avg": 0.09,
+    "max": 26.34,
+    "min": 0,
+    "samples": 297
+  },
+  "pClusterDownResidency": {
+    "avg": 0.27,
+    "max": 47.65,
+    "min": 0,
+    "samples": 297
+  },
+  "eClusterDownResidency": {
+    "avg": 0,
+    "max": 0,
+    "min": 0,
+    "samples": 297
+  },
+  "totalSamples": 297,
+  "durationMs": 300899,
+  "stress": {
+    "workers": 12,
+    "totalIterations": 660434080000,
+    "elapsedMs": 300028,
+    "iterationsPerSecond": 2201241484,
+    "perWorker": [
+      {
+        "workerId": 2,
+        "iterations": 55609770000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 3,
+        "iterations": 55424850000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 6,
+        "iterations": 53650630000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 1,
+        "iterations": 55518670000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 0,
+        "iterations": 55483810000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 9,
+        "iterations": 52696870000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 5,
+        "iterations": 55579490000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 7,
+        "iterations": 55525150000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 11,
+        "iterations": 54882680000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 4,
+        "iterations": 55211370000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 8,
+        "iterations": 55392790000,
+        "elapsedMs": 300000
+      },
+      {
+        "workerId": 10,
+        "iterations": 55458000000,
+        "elapsedMs": 300000
+      }
+    ]
+  },
+  "completedAt": "2026-02-18T05:26:37.890Z"
+}

@@ -1,0 +1,16 @@
+{
+  "machine": "pro",
+  "timestamp": "20260218_142711",
+  "duration": 600,
+  "interval": 1000,
+  "workers": 12,
+  "nodeVersion": "v20.19.5",
+  "macosVersion": "15.5",
+  "chip": "Apple M4 Pro",
+  "model": "MacBook Pro / Apple M4 Pro",
+  "arch": "arm64",
+  "cpuCount": 12,
+  "totalMemory": "24GB",
+  "startedAt": "2026-02-18T05:27:11.729Z",
+  "completedAt": "2026-02-18T05:37:13.817Z"
+}

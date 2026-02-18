@@ -1,0 +1,17 @@
+{
+  "name": "m4-sustained-performance-lab",
+  "version": "1.0.0",
+  "description": "Sustained performance benchmark for Apple Silicon Macs (M4 Pro vs M4)",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "bench:short": "npm run build && node dist/scripts/run_bench.js --duration 60 --interval 1000",
+    "bench:mid": "npm run build && node dist/scripts/run_bench.js --duration 300 --interval 1000",
+    "bench:long": "npm run build && node dist/scripts/run_bench.js --duration 600 --interval 1000",
+    "compare": "npm run build && node dist/scripts/compare.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
