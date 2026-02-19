@@ -8,6 +8,9 @@
     "bench:short": "npm run build && node dist/scripts/run_bench.js --duration 60 --interval 1000",
     "bench:mid": "npm run build && node dist/scripts/run_bench.js --duration 300 --interval 1000",
     "bench:long": "npm run build && node dist/scripts/run_bench.js --duration 600 --interval 1000",
+    "bench:m4:short": "npm run build && node dist/scripts/run_bench_m4_strengths.js --duration 60",
+    "bench:m4:mid": "npm run build && node dist/scripts/run_bench_m4_strengths.js --duration 300",
+    "bench:m4:long": "npm run build && node dist/scripts/run_bench_m4_strengths.js --duration 600",
     "compare": "npm run build && node dist/scripts/compare.js",
     "compare:all": "npm run build && node dist/scripts/compare_all.js"
   },

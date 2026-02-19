@@ -67,13 +67,13 @@ function loadJson<T>(dir: string, filename: string): T {
   return JSON.parse(fs.readFileSync(path.join(dir, filename), "utf-8"));
 }
 
-function fmtVal(v: number | null, unit: string): string {
-  if (v === null) return "N/A";
+function fmtVal(v: number | null | undefined, unit: string): string {
+  if (v == null) return "N/A";
   return `${v.toLocaleString()}${unit}`;
 }
 
-function pctDiff(a: number | null, b: number | null): string {
-  if (a === null || b === null || b === 0) return "";
+function pctDiff(a: number | null | undefined, b: number | null | undefined): string {
+  if (a == null || b == null || b === 0) return "";
   const diff = ((a - b) / b) * 100;
   const sign = diff > 0 ? "+" : "";
   return `(${sign}${diff.toFixed(1)}%)`;

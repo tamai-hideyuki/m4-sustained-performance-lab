@@ -74,16 +74,16 @@ function loadResults(machine: string): Result[] {
     .sort((a, b) => a.run.duration - b.run.duration);
 }
 
-function fmtNum(v: number | null, decimals = 0): string {
-  if (v === null) return "N/A";
+function fmtNum(v: number | null | undefined, decimals = 0): string {
+  if (v == null) return "N/A";
   return v.toLocaleString(undefined, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
 }
 
-function pctChange(from: number | null, to: number | null): string {
-  if (from === null || to === null || from === 0) return "";
+function pctChange(from: number | null | undefined, to: number | null | undefined): string {
+  if (from == null || to == null || from === 0) return "";
   const diff = ((to - from) / from) * 100;
   const sign = diff > 0 ? "+" : "";
   return `${sign}${diff.toFixed(1)}%`;
@@ -94,24 +94,49 @@ function durLabel(dur: number): string {
   return `${Math.round(dur / 60)}min`;
 }
 
+function discoverMachines(): string[] {
+  const resultsDir = path.join(process.cwd(), "results");
+  if (!fs.existsSync(resultsDir)) return [];
+  return fs
+    .readdirSync(resultsDir)
+    .filter((e) => {
+      if (e.startsWith(".")) return false;
+      const full = path.join(resultsDir, e);
+      return fs.statSync(full).isDirectory();
+    })
+    .sort();
+}
+
 function main() {
-  const args = process.argv.slice(2);
-  let machineA = "pro";
-  let machineB = "air";
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === "--a") machineA = args[++i];
-    if (args[i] === "--b") machineB = args[++i];
+  // Auto-discover all machines under results/
+  const machineNames = discoverMachines();
+  const machines: { name: string; results: Result[] }[] = [];
+  for (const name of machineNames) {
+    const results = loadResults(name);
+    if (results.length > 0) {
+      machines.push({ name, results });
+    }
   }
 
-  const resultsA = loadResults(machineA);
-  const resultsB = loadResults(machineB);
-
-  if (resultsA.length === 0 && resultsB.length === 0) {
+  if (machines.length === 0) {
     console.error("No results found. Run benchmarks first.");
     process.exit(1);
   }
 
-  const W = 90;
+  // Build columns: each result is a column
+  const allResults: { label: string; result: Result }[] = [];
+  for (const m of machines) {
+    for (const r of m.results) {
+      allResults.push({
+        label: `${m.name.toUpperCase()} ${durLabel(r.run.duration)}`,
+        result: r,
+      });
+    }
+  }
+
+  const COL = 16;
+  const LABEL_W = 24;
+  const W = LABEL_W + COL * allResults.length;
   const sep = "=".repeat(W);
   const line = "-".repeat(W);
 
@@ -120,37 +145,13 @@ function main() {
   console.log(sep);
 
   // Machine info
-  if (resultsA.length > 0) {
-    const r = resultsA[0].run;
+  for (const m of machines) {
+    const r = m.results[0].run;
     console.log(
-      `  ${machineA.toUpperCase()}: ${r.model}  (${r.workers} workers)`
-    );
-  }
-  if (resultsB.length > 0) {
-    const r = resultsB[0].run;
-    console.log(
-      `  ${machineB.toUpperCase()}: ${r.model}  (${r.workers} workers)`
+      `  ${m.name.toUpperCase()}: ${r.model}  (${r.workers} workers)`
     );
   }
   console.log(sep);
-
-  // Build columns: each result is a column
-  const allResults: { label: string; result: Result }[] = [];
-  for (const r of resultsA) {
-    allResults.push({
-      label: `${machineA.toUpperCase()} ${durLabel(r.run.duration)}`,
-      result: r,
-    });
-  }
-  for (const r of resultsB) {
-    allResults.push({
-      label: `${machineB.toUpperCase()} ${durLabel(r.run.duration)}`,
-      result: r,
-    });
-  }
-
-  const COL = 16;
-  const LABEL_W = 24;
 
   // Header
   let header = "".padEnd(LABEL_W);
@@ -203,11 +204,6 @@ function main() {
   console.log(sep);
   console.log("  Performance Degradation (60s -> longest)");
   console.log(line);
-
-  const machines = [
-    { name: machineA, results: resultsA },
-    { name: machineB, results: resultsB },
-  ];
 
   for (const m of machines) {
     if (m.results.length < 2) continue;
