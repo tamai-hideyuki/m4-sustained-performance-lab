@@ -1,0 +1,17 @@
+{
+  "machine": "pro-m3",
+  "timestamp": "20260220_080454",
+  "duration": 300,
+  "interval": 1000,
+  "workers": 12,
+  "warmup": 5,
+  "nodeVersion": "v20.11.0",
+  "macosVersion": "15.6",
+  "chip": "Apple M3 Pro",
+  "model": "MacBook Pro / Apple M3 Pro",
+  "arch": "arm64",
+  "cpuCount": 12,
+  "totalMemory": "36GB",
+  "startedAt": "2026-02-19T23:04:54.676Z",
+  "completedAt": "2026-02-19T23:09:56.774Z"
+}

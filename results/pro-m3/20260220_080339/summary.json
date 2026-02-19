@@ -1,0 +1,944 @@
+{
+  "cpuPower": {
+    "avg": 29171.73,
+    "max": 31529,
+    "min": 26329,
+    "median": 29227.5,
+    "stddev": 1116.39,
+    "p5": 26572,
+    "p95": 30353.5,
+    "samples": 56
+  },
+  "gpuPower": {
+    "avg": 60.93,
+    "max": 372,
+    "min": 2,
+    "median": 18,
+    "stddev": 88.61,
+    "p5": 6,
+    "p95": 263.75,
+    "samples": 56
+  },
+  "combinedPower": {
+    "avg": 29232.46,
+    "max": 31531,
+    "min": 26602,
+    "median": 29322,
+    "stddev": 1067.93,
+    "p5": 26702.5,
+    "p95": 30378,
+    "samples": 56
+  },
+  "pClusterFreq": {
+    "avg": 3575.98,
+    "max": 3576,
+    "min": 3575,
+    "median": 3576,
+    "stddev": 0.13,
+    "p5": 3576,
+    "p95": 3576,
+    "samples": 56
+  },
+  "eClusterFreq": {
+    "avg": 2639.59,
+    "max": 2640,
+    "min": 2633,
+    "median": 2640,
+    "stddev": 1.22,
+    "p5": 2637,
+    "p95": 2640,
+    "samples": 56
+  },
+  "pClusterActiveResidency": {
+    "avg": 100,
+    "max": 100,
+    "min": 100,
+    "median": 100,
+    "stddev": 0,
+    "p5": 100,
+    "p95": 100,
+    "samples": 56
+  },
+  "eClusterActiveResidency": {
+    "avg": 100,
+    "max": 100,
+    "min": 100,
+    "median": 100,
+    "stddev": 0,
+    "p5": 100,
+    "p95": 100,
+    "samples": 56
+  },
+  "pClusterIdleResidency": {
+    "avg": 0,
+    "max": 0,
+    "min": 0,
+    "median": 0,
+    "stddev": 0,
+    "p5": 0,
+    "p95": 0,
+    "samples": 56
+  },
+  "eClusterIdleResidency": {
+    "avg": 0,
+    "max": 0,
+    "min": 0,
+    "median": 0,
+    "stddev": 0,
+    "p5": 0,
+    "p95": 0,
+    "samples": 56
+  },
+  "pClusterDownResidency": {
+    "avg": null,
+    "max": null,
+    "min": null,
+    "median": null,
+    "stddev": null,
+    "p5": null,
+    "p95": null,
+    "samples": 0
+  },
+  "eClusterDownResidency": {
+    "avg": null,
+    "max": null,
+    "min": null,
+    "median": null,
+    "stddev": null,
+    "p5": null,
+    "p95": null,
+    "samples": 0
+  },
+  "totalSamples": 61,
+  "warmupSamplesExcluded": 5,
+  "durationMs": 61359,
+  "timeseries": [
+    {
+      "index": 0,
+      "elapsedMs": 1005,
+      "cpuPower": 939,
+      "gpuPower": 15,
+      "combinedPower": 954,
+      "pClusterFreq": 1913,
+      "eClusterFreq": 1006,
+      "pClusterActiveResidency": 21.33,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 1,
+      "elapsedMs": 2020,
+      "cpuPower": 11644,
+      "gpuPower": 9,
+      "combinedPower": 11653,
+      "pClusterFreq": 2968,
+      "eClusterFreq": 1671,
+      "pClusterActiveResidency": 51.19,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 2,
+      "elapsedMs": 3027,
+      "cpuPower": 32134,
+      "gpuPower": 12,
+      "combinedPower": 32146,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 3,
+      "elapsedMs": 4034,
+      "cpuPower": 32185,
+      "gpuPower": 6,
+      "combinedPower": 32190,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 4,
+      "elapsedMs": 5040,
+      "cpuPower": 30632,
+      "gpuPower": 9,
+      "combinedPower": 30641,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 5,
+      "elapsedMs": 6046,
+      "cpuPower": 31529,
+      "gpuPower": 2,
+      "combinedPower": 31531,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 6,
+      "elapsedMs": 7051,
+      "cpuPower": 29747,
+      "gpuPower": 9,
+      "combinedPower": 29756,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 7,
+      "elapsedMs": 8057,
+      "cpuPower": 29378,
+      "gpuPower": 13,
+      "combinedPower": 29391,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 8,
+      "elapsedMs": 9062,
+      "cpuPower": 30852,
+      "gpuPower": 6,
+      "combinedPower": 30858,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 9,
+      "elapsedMs": 10068,
+      "cpuPower": 30022,
+      "gpuPower": 8,
+      "combinedPower": 30030,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 10,
+      "elapsedMs": 11073,
+      "cpuPower": 30511,
+      "gpuPower": 11,
+      "combinedPower": 30522,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 11,
+      "elapsedMs": 12078,
+      "cpuPower": 29364,
+      "gpuPower": 13,
+      "combinedPower": 29376,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 12,
+      "elapsedMs": 13084,
+      "cpuPower": 28428,
+      "gpuPower": 6,
+      "combinedPower": 28434,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 13,
+      "elapsedMs": 14090,
+      "cpuPower": 28431,
+      "gpuPower": 6,
+      "combinedPower": 28437,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2637,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 14,
+      "elapsedMs": 15096,
+      "cpuPower": 28440,
+      "gpuPower": 18,
+      "combinedPower": 28458,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 15,
+      "elapsedMs": 16102,
+      "cpuPower": 28434,
+      "gpuPower": 7,
+      "combinedPower": 28441,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 16,
+      "elapsedMs": 17108,
+      "cpuPower": 28341,
+      "gpuPower": 12,
+      "combinedPower": 28353,
+      "pClusterFreq": 3575,
+      "eClusterFreq": 2637,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 17,
+      "elapsedMs": 18114,
+      "cpuPower": 26572,
+      "gpuPower": 43,
+      "combinedPower": 26614,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 18,
+      "elapsedMs": 19119,
+      "cpuPower": 26572,
+      "gpuPower": 144,
+      "combinedPower": 26716,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 19,
+      "elapsedMs": 20125,
+      "cpuPower": 26397,
+      "gpuPower": 266,
+      "combinedPower": 26662,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2633,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 20,
+      "elapsedMs": 21130,
+      "cpuPower": 26732,
+      "gpuPower": 223,
+      "combinedPower": 26954,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 21,
+      "elapsedMs": 22136,
+      "cpuPower": 26329,
+      "gpuPower": 273,
+      "combinedPower": 26602,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 22,
+      "elapsedMs": 23141,
+      "cpuPower": 27414,
+      "gpuPower": 229,
+      "combinedPower": 27643,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 23,
+      "elapsedMs": 24147,
+      "cpuPower": 28023,
+      "gpuPower": 372,
+      "combinedPower": 28395,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 24,
+      "elapsedMs": 25153,
+      "cpuPower": 28399,
+      "gpuPower": 18,
+      "combinedPower": 28417,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 25,
+      "elapsedMs": 26159,
+      "cpuPower": 28884,
+      "gpuPower": 18,
+      "combinedPower": 28901,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 26,
+      "elapsedMs": 27166,
+      "cpuPower": 28833,
+      "gpuPower": 19,
+      "combinedPower": 28852,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 27,
+      "elapsedMs": 28172,
+      "cpuPower": 28744,
+      "gpuPower": 17,
+      "combinedPower": 28761,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 28,
+      "elapsedMs": 29178,
+      "cpuPower": 28900,
+      "gpuPower": 24,
+      "combinedPower": 28924,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2638,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 29,
+      "elapsedMs": 30183,
+      "cpuPower": 28790,
+      "gpuPower": 20,
+      "combinedPower": 28810,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 30,
+      "elapsedMs": 31189,
+      "cpuPower": 28894,
+      "gpuPower": 15,
+      "combinedPower": 28909,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 31,
+      "elapsedMs": 32195,
+      "cpuPower": 29242,
+      "gpuPower": 11,
+      "combinedPower": 29253,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 32,
+      "elapsedMs": 33200,
+      "cpuPower": 29213,
+      "gpuPower": 29,
+      "combinedPower": 29242,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 33,
+      "elapsedMs": 34206,
+      "cpuPower": 28743,
+      "gpuPower": 33,
+      "combinedPower": 28776,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 34,
+      "elapsedMs": 35211,
+      "cpuPower": 29156,
+      "gpuPower": 16,
+      "combinedPower": 29172,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 35,
+      "elapsedMs": 36217,
+      "cpuPower": 29186,
+      "gpuPower": 63,
+      "combinedPower": 29249,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 36,
+      "elapsedMs": 37223,
+      "cpuPower": 29118,
+      "gpuPower": 199,
+      "combinedPower": 29316,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2637,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 37,
+      "elapsedMs": 38229,
+      "cpuPower": 29067,
+      "gpuPower": 97,
+      "combinedPower": 29164,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 38,
+      "elapsedMs": 39235,
+      "cpuPower": 29121,
+      "gpuPower": 207,
+      "combinedPower": 29328,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 39,
+      "elapsedMs": 40240,
+      "cpuPower": 28932,
+      "gpuPower": 218,
+      "combinedPower": 29149,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 40,
+      "elapsedMs": 41246,
+      "cpuPower": 29460,
+      "gpuPower": 62,
+      "combinedPower": 29522,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 41,
+      "elapsedMs": 42252,
+      "cpuPower": 29699,
+      "gpuPower": 6,
+      "combinedPower": 29705,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 42,
+      "elapsedMs": 43259,
+      "cpuPower": 29767,
+      "gpuPower": 10,
+      "combinedPower": 29777,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 43,
+      "elapsedMs": 44264,
+      "cpuPower": 29764,
+      "gpuPower": 95,
+      "combinedPower": 29859,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 44,
+      "elapsedMs": 45270,
+      "cpuPower": 28999,
+      "gpuPower": 263,
+      "combinedPower": 29263,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2638,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 45,
+      "elapsedMs": 46276,
+      "cpuPower": 29889,
+      "gpuPower": 15,
+      "combinedPower": 29904,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 46,
+      "elapsedMs": 47282,
+      "cpuPower": 29923,
+      "gpuPower": 9,
+      "combinedPower": 29932,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 47,
+      "elapsedMs": 48288,
+      "cpuPower": 29988,
+      "gpuPower": 25,
+      "combinedPower": 30012,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 48,
+      "elapsedMs": 49293,
+      "cpuPower": 29980,
+      "gpuPower": 13,
+      "combinedPower": 29993,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2637,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 49,
+      "elapsedMs": 50299,
+      "cpuPower": 30040,
+      "gpuPower": 21,
+      "combinedPower": 30060,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 50,
+      "elapsedMs": 51304,
+      "cpuPower": 29989,
+      "gpuPower": 15,
+      "combinedPower": 30004,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 51,
+      "elapsedMs": 52310,
+      "cpuPower": 30115,
+      "gpuPower": 16,
+      "combinedPower": 30131,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 52,
+      "elapsedMs": 53316,
+      "cpuPower": 30301,
+      "gpuPower": 30,
+      "combinedPower": 30330,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 53,
+      "elapsedMs": 54322,
+      "cpuPower": 29988,
+      "gpuPower": 27,
+      "combinedPower": 30014,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 54,
+      "elapsedMs": 55327,
+      "cpuPower": 30207,
+      "gpuPower": 50,
+      "combinedPower": 30256,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 55,
+      "elapsedMs": 56332,
+      "cpuPower": 29872,
+      "gpuPower": 19,
+      "combinedPower": 29891,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 56,
+      "elapsedMs": 57338,
+      "cpuPower": 30135,
+      "gpuPower": 17,
+      "combinedPower": 30152,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 57,
+      "elapsedMs": 58343,
+      "cpuPower": 30283,
+      "gpuPower": 17,
+      "combinedPower": 30300,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 58,
+      "elapsedMs": 59349,
+      "cpuPower": 30092,
+      "gpuPower": 14,
+      "combinedPower": 30106,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 59,
+      "elapsedMs": 60354,
+      "cpuPower": 30133,
+      "gpuPower": 11,
+      "combinedPower": 30144,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    },
+    {
+      "index": 60,
+      "elapsedMs": 61359,
+      "cpuPower": 30255,
+      "gpuPower": 12,
+      "combinedPower": 30267,
+      "pClusterFreq": 3576,
+      "eClusterFreq": 2640,
+      "pClusterActiveResidency": 100,
+      "eClusterActiveResidency": 100,
+      "thermalPressure": null
+    }
+  ],
+  "stress": {
+    "workers": 12,
+    "totalIterations": 168343580000,
+    "elapsedMs": 60049,
+    "iterationsPerSecond": 2803436860,
+    "perWorker": [
+      {
+        "workerId": 2,
+        "iterations": 13677410000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 3,
+        "iterations": 13874140000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 6,
+        "iterations": 13891910000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 1,
+        "iterations": 13770900000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 9,
+        "iterations": 13727310000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 0,
+        "iterations": 13957700000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 11,
+        "iterations": 13707720000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 5,
+        "iterations": 15236590000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 7,
+        "iterations": 13964050000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 4,
+        "iterations": 13929980000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 8,
+        "iterations": 13646080000,
+        "elapsedMs": 60000
+      },
+      {
+        "workerId": 10,
+        "iterations": 14959790000,
+        "elapsedMs": 60000
+      }
+    ],
+    "throughputTimeseries": [
+      {
+        "elapsedSec": 10,
+        "aggregateIps": 3997309000
+      },
+      {
+        "elapsedSec": 20,
+        "aggregateIps": 2285541000
+      },
+      {
+        "elapsedSec": 30,
+        "aggregateIps": 2499107000
+      },
+      {
+        "elapsedSec": 40,
+        "aggregateIps": 2598803000
+      },
+      {
+        "elapsedSec": 50,
+        "aggregateIps": 2707579000
+      },
+      {
+        "elapsedSec": 60,
+        "aggregateIps": 2746019000
+      }
+    ]
+  },
+  "completedAt": "2026-02-19T23:04:42.233Z"
+}
