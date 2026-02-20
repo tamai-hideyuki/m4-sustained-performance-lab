@@ -1,0 +1,430 @@
+{
+  "machine": "pro",
+  "timestamp": "20260220_091427",
+  "durationPerTest": 60,
+  "workers": 12,
+  "nodeVersion": "v20.19.5",
+  "model": "MacBook Pro / Apple M4 Pro",
+  "chip": "Apple M4 Pro",
+  "arch": "arm64",
+  "cpuCount": 12,
+  "totalMemory": "24GB",
+  "workloads": [
+    {
+      "workload": "sha256",
+      "description": "SHA-256 hash (4KB, hardware accel)",
+      "totalIterations": 192779000,
+      "elapsedMs": 60024,
+      "opsPerSecond": 3211699,
+      "perWorker": [
+        {
+          "workerId": 0,
+          "iterations": 16003000,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 2,
+          "iterations": 15989000,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 7,
+          "iterations": 16118000,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 4,
+          "iterations": 15973000,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 3,
+          "iterations": 16029000,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 1,
+          "iterations": 16065000,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 5,
+          "iterations": 16080000,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 6,
+          "iterations": 15981000,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 9,
+          "iterations": 16227000,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 11,
+          "iterations": 16222000,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 8,
+          "iterations": 16049000,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 10,
+          "iterations": 16043000,
+          "elapsedMs": 60000
+        }
+      ]
+    },
+    {
+      "workload": "aes-gcm",
+      "description": "AES-256-GCM encrypt (4KB, hardware accel)",
+      "totalIterations": 9900000,
+      "elapsedMs": 60035,
+      "opsPerSecond": 164904,
+      "perWorker": [
+        {
+          "workerId": 11,
+          "iterations": 825000,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 1,
+          "iterations": 825000,
+          "elapsedMs": 60005
+        },
+        {
+          "workerId": 9,
+          "iterations": 825000,
+          "elapsedMs": 60009
+        },
+        {
+          "workerId": 10,
+          "iterations": 825000,
+          "elapsedMs": 60009
+        },
+        {
+          "workerId": 8,
+          "iterations": 825000,
+          "elapsedMs": 60009
+        },
+        {
+          "workerId": 5,
+          "iterations": 825000,
+          "elapsedMs": 60011
+        },
+        {
+          "workerId": 7,
+          "iterations": 824000,
+          "elapsedMs": 60009
+        },
+        {
+          "workerId": 0,
+          "iterations": 825000,
+          "elapsedMs": 60011
+        },
+        {
+          "workerId": 6,
+          "iterations": 825000,
+          "elapsedMs": 60012
+        },
+        {
+          "workerId": 4,
+          "iterations": 825000,
+          "elapsedMs": 60015
+        },
+        {
+          "workerId": 3,
+          "iterations": 826000,
+          "elapsedMs": 60018
+        },
+        {
+          "workerId": 2,
+          "iterations": 825000,
+          "elapsedMs": 60016
+        }
+      ]
+    },
+    {
+      "workload": "memory-bandwidth",
+      "description": "Sequential 64MB Float64 read/write",
+      "totalIterations": 79767,
+      "elapsedMs": 60049,
+      "opsPerSecond": 1328,
+      "perWorker": [
+        {
+          "workerId": 2,
+          "iterations": 6672,
+          "elapsedMs": 60004
+        },
+        {
+          "workerId": 6,
+          "iterations": 6652,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 0,
+          "iterations": 6691,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 3,
+          "iterations": 6676,
+          "elapsedMs": 60004
+        },
+        {
+          "workerId": 5,
+          "iterations": 6661,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 1,
+          "iterations": 6607,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 7,
+          "iterations": 6644,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 10,
+          "iterations": 6622,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 4,
+          "iterations": 6651,
+          "elapsedMs": 60006
+        },
+        {
+          "workerId": 8,
+          "iterations": 6619,
+          "elapsedMs": 60004
+        },
+        {
+          "workerId": 11,
+          "iterations": 6647,
+          "elapsedMs": 60005
+        },
+        {
+          "workerId": 9,
+          "iterations": 6625,
+          "elapsedMs": 60004
+        }
+      ]
+    },
+    {
+      "workload": "memory-latency",
+      "description": "Random pointer chasing (16M entries)",
+      "totalIterations": 5816000000,
+      "elapsedMs": 60155,
+      "opsPerSecond": 96683567,
+      "perWorker": [
+        {
+          "workerId": 7,
+          "iterations": 485000000,
+          "elapsedMs": 60006
+        },
+        {
+          "workerId": 4,
+          "iterations": 485000000,
+          "elapsedMs": 60019
+        },
+        {
+          "workerId": 0,
+          "iterations": 484000000,
+          "elapsedMs": 60021
+        },
+        {
+          "workerId": 6,
+          "iterations": 484000000,
+          "elapsedMs": 60028
+        },
+        {
+          "workerId": 5,
+          "iterations": 484000000,
+          "elapsedMs": 60031
+        },
+        {
+          "workerId": 2,
+          "iterations": 484000000,
+          "elapsedMs": 60044
+        },
+        {
+          "workerId": 10,
+          "iterations": 485000000,
+          "elapsedMs": 60066
+        },
+        {
+          "workerId": 11,
+          "iterations": 486000000,
+          "elapsedMs": 60092
+        },
+        {
+          "workerId": 1,
+          "iterations": 485000000,
+          "elapsedMs": 60097
+        },
+        {
+          "workerId": 8,
+          "iterations": 486000000,
+          "elapsedMs": 60093
+        },
+        {
+          "workerId": 3,
+          "iterations": 483000000,
+          "elapsedMs": 60105
+        },
+        {
+          "workerId": 9,
+          "iterations": 485000000,
+          "elapsedMs": 60114
+        }
+      ]
+    },
+    {
+      "workload": "json",
+      "description": "JSON parse + stringify (complex object)",
+      "totalIterations": 4716400,
+      "elapsedMs": 60029,
+      "opsPerSecond": 78569,
+      "perWorker": [
+        {
+          "workerId": 8,
+          "iterations": 395100,
+          "elapsedMs": 60004
+        },
+        {
+          "workerId": 1,
+          "iterations": 395200,
+          "elapsedMs": 60005
+        },
+        {
+          "workerId": 2,
+          "iterations": 388500,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 3,
+          "iterations": 393500,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 10,
+          "iterations": 391200,
+          "elapsedMs": 60005
+        },
+        {
+          "workerId": 5,
+          "iterations": 390600,
+          "elapsedMs": 60003
+        },
+        {
+          "workerId": 0,
+          "iterations": 393000,
+          "elapsedMs": 60006
+        },
+        {
+          "workerId": 9,
+          "iterations": 392300,
+          "elapsedMs": 60006
+        },
+        {
+          "workerId": 4,
+          "iterations": 395600,
+          "elapsedMs": 60008
+        },
+        {
+          "workerId": 6,
+          "iterations": 393100,
+          "elapsedMs": 60006
+        },
+        {
+          "workerId": 11,
+          "iterations": 395100,
+          "elapsedMs": 60004
+        },
+        {
+          "workerId": 7,
+          "iterations": 393200,
+          "elapsedMs": 60011
+        }
+      ]
+    },
+    {
+      "workload": "regex",
+      "description": "Complex regex matching (5 patterns)",
+      "totalIterations": 30501000,
+      "elapsedMs": 60057,
+      "opsPerSecond": 507868,
+      "perWorker": [
+        {
+          "workerId": 0,
+          "iterations": 2545600,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 3,
+          "iterations": 2540400,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 2,
+          "iterations": 2548000,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 8,
+          "iterations": 2517900,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 10,
+          "iterations": 2569100,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 1,
+          "iterations": 2528200,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 5,
+          "iterations": 2553600,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 4,
+          "iterations": 2565600,
+          "elapsedMs": 60002
+        },
+        {
+          "workerId": 6,
+          "iterations": 2498500,
+          "elapsedMs": 60001
+        },
+        {
+          "workerId": 9,
+          "iterations": 2516400,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 11,
+          "iterations": 2572800,
+          "elapsedMs": 60000
+        },
+        {
+          "workerId": 7,
+          "iterations": 2544900,
+          "elapsedMs": 60000
+        }
+      ]
+    }
+  ],
+  "startedAt": "2026-02-20T00:14:28.106Z",
+  "completedAt": "2026-02-20T00:20:28.465Z"
+}
